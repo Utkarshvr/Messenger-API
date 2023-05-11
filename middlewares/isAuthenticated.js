@@ -6,8 +6,7 @@ module.exports = async function isAuthenticated(req, res, next) {
   try {
     const { token } = req.body;
     if (!token) {
-      return res
-        .json({ status: false, message: "Login First", code: 4 });
+      return res.json({ status: false, message: "Login First", code: 4 });
     }
     const decodedToken = jwt.verify(
       token,
