@@ -84,10 +84,14 @@ const setAvatar = async (req, res, next) => {
   try {
     const userId = req.user._id;
     const avatarImage = req.body.image;
-    const user = await User.findByIdAndUpdate(userId, {
+
+    let user = await User.findByIdAndUpdate(userId, {
       isAvatarImageSet: true,
       avatarImage,
-    });
+    }); // Returns Original Copy (before Updating)
+
+    user = await User.findById(userId);
+
     const data = { user: { id: user._id } };
     const token = jwt.sign(data, process.env.SECRET_KEY);
     // Sending The Token Associated With The User
